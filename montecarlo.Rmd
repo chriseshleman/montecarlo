@@ -1,0 +1,101 @@
+---
+title: "montecarlo"
+author: "Planning & Regional Development"
+date: "5/18/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+#install.packages("MonteCarlo") 
+library(MonteCarlo)
+```
+
+So, we're buying stock in Black Flag (roach motels). Average returns are 7% (SD is 9%). 
+
+```{r}
+set.seed(239) 
+returns = rnorm(1:100, mean = 9, sd = 12) # rnorm: normal distribution 
+```
+
+```{r}
+hist(returns)
+```
+
+
+We want to ignore it for five years, then check in to see where it's landed. 
+```{r}
+sample(returns,size = 5)
+```
+That's five years of returns. But try again ... 
+```{r}
+sample(returns,size = 4)
+```
+... and there are five different returns. 
+
+A quick Monte Carlo tells us what to expect. You sample from the vector of potential returns, then take the mean for each year. 
+
+```{r}
+X = matrix(ncol = 5,nrow = 1000)
+for(year in 1:5) {
+# for each year, sample the return 1000 times
+ for(i in 1:1000){
+  X[i,year] = sample(returns,1)
+ }
+}
+
+head(X)
+```
+
+Grab the column means for an expectation for each year: 
+```{r}
+apply(X,2,mean)
+```
+
+
+
+# Outbreaks 
+OK, so there may be up to three subsequent outbreaks and three associated lockdowns. 
+
+```{r}
+set.seed(239) 
+returns = rnorm(1:100, mean = 9, sd = 12) # rnorm: normal distribution 
+```
+
+```{r}
+hist(returns)
+```
+
+
+We want to ignore it for five years, then check in to see where it's landed. 
+```{r}
+sample(returns,size = 5)
+```
+That's five years of returns. But try again ... 
+```{r}
+sample(returns,size = 4)
+```
+... and there are five different returns. 
+
+A quick Monte Carlo tells us what to expect. You sample from the vector of potential returns, then take the mean for each year. 
+
+```{r}
+X = matrix(ncol = 5,nrow = 1000)
+for(year in 1:5) {
+# for each year, sample the return 1000 times
+ for(i in 1:1000){
+  X[i,year] = sample(returns,1)
+ }
+}
+
+head(X)
+```
+
+Grab the column means for an expectation for each year: 
+```{r}
+apply(X,2,mean)
+```
+
